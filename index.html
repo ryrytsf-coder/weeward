@@ -1,37 +1,331 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wildward</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            overflow: hidden;
-        }
-        #game {
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
+
+  <meta charset="UTF-8">
+
+  <meta
+
+    name="viewport"
+
+    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+
+  >
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <title>Wildward</title>
+
+  <style>
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+    html,
+
+    body {
+
+      margin: 0;
+
+      padding: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      background: #000;
+
+      overflow: hidden;
+
+      font-family: Arial, sans-serif;
+
+      color: white;
+
+    }
+
+    #game {
+
+      width: 100vw;
+
+      height: 100vh;
+
+      height: 100dvh;
+
+      background: black;
+
+    }
+
+    #launchScreen {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 9999;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 25px;
+
+      background: black;
+
+      text-align: center;
+
+    }
+
+    #launchScreen h1 {
+
+      margin: 0 0 10px;
+
+      font-size: 40px;
+
+    }
+
+    #launchScreen p {
+
+      max-width: 400px;
+
+      margin-bottom: 20px;
+
+      opacity: 0.8;
+
+    }
+
+    #playButton {
+
+      border: none;
+
+      border-radius: 14px;
+
+      padding: 18px 30px;
+
+      font-size: 22px;
+
+      font-weight: bold;
+
+      background: white;
+
+      color: black;
+
+      cursor: pointer;
+
+    }
+
+    #playButton:disabled {
+
+      opacity: 0.5;
+
+    }
+
+    #status {
+
+      margin-top: 14px;
+
+      font-size: 14px;
+
+      opacity: 0.7;
+
+    }
+
+  </style>
+
 </head>
+
 <body>
 
-    <div id="game"></div>
+  <div id="launchScreen">
 
-    <script type="text/javascript">
-        EJS_player = '#game';
-        EJS_core = 'gba';
-        EJS_gameName = 'Wildward';
-        EJS_startOnLoaded = true;
-        EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-        EJS_gameUrl = "./wildward.gba";
-    </script>
-    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+    <h1>WILDWARD</h1>
+
+    <p>
+
+      Tap the button below to start Wildward.
+
+    </p>
+
+    <button id="playButton">
+
+      PLAY WILDWARD
+
+    </button>
+
+    <div id="status">
+
+      Ready
+
+    </div>
+
+  </div>
+
+  <div id="game"></div>
+
+  <script>
+
+    const playButton =
+
+      document.getElementById("playButton");
+
+    const launchScreen =
+
+      document.getElementById("launchScreen");
+
+    const status =
+
+      document.getElementById("status");
+
+    playButton.addEventListener("click", function () {
+
+      playButton.disabled = true;
+
+      status.textContent =
+
+        "Loading Wildward...";
+
+      /*
+
+        EMULATOR SETTINGS
+
+      */
+
+      window.EJS_player =
+
+        "#game";
+
+      window.EJS_core =
+
+        "gba";
+
+      window.EJS_gameName =
+
+        "Wildward";
+
+      /*
+
+        ROM FILE
+
+        wildward.gba must be in the SAME
+
+        GitHub folder as index.html
+
+      */
+
+      window.EJS_gameUrl =
+
+        new URL(
+
+          "./wildward.gba",
+
+          window.location.href
+
+        ).href;
+
+      /*
+
+        EMULATOR FILES
+
+        Using a fixed EmulatorJS release
+
+        instead of @main.
+
+      */
+
+      window.EJS_pathtodata =
+
+        "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@4.2.3/data/";
+
+      /*
+
+        MOBILE SETTINGS
+
+      */
+
+      window.EJS_startOnLoaded =
+
+        true;
+
+      window.EJS_threads =
+
+        false;
+
+      window.EJS_browserMode =
+
+        "mobile";
+
+      window.EJS_askBeforeExit =
+
+        false;
+
+      /*
+
+        Load EmulatorJS only AFTER
+
+        the user presses PLAY.
+
+      */
+
+      const emulatorScript =
+
+        document.createElement("script");
+
+      emulatorScript.src =
+
+        "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@4.2.3/data/loader.js";
+
+      emulatorScript.onload =
+
+        function () {
+
+          status.textContent =
+
+            "Starting Wildward...";
+
+          setTimeout(function () {
+
+            launchScreen.style.display =
+
+              "none";
+
+          }, 1200);
+
+        };
+
+      emulatorScript.onerror =
+
+        function () {
+
+          status.textContent =
+
+            "Emulator failed to load.";
+
+          playButton.disabled =
+
+            false;
+
+        };
+
+      document.body.appendChild(
+
+        emulatorScript
+
+      );
+
+    });
+
+  </script>
 
 </body>
+
 </html>
