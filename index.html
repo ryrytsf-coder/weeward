@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weeward - Play Online</title>
+    <title>Wildward</title>
     <style>
         html, body {
             margin: 0;
@@ -13,7 +13,7 @@
             background-color: #000;
             overflow: hidden;
         }
-        #game-container {
+        #game {
             width: 100vw;
             height: 100vh;
         }
@@ -21,20 +21,17 @@
 </head>
 <body>
 
-    <div id="game-container">
-        <div id="game"></div>
-    </div>
+    <div id="game"></div>
 
     <script type="text/javascript">
         EJS_player = '#game';
         EJS_core = 'gba';
-        EJS_gameName = 'Weeward';
-        EJS_color = '#0066FF';
+        EJS_gameName = 'Wildward';
         EJS_startOnLoaded = true;
-        EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
-        EJS_gameUrl = 'weeward.gba';
+        EJS_pathtodata = 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/';
+        EJS_gameUrl = 'wildward.gba';
     </script>
-    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/loader.js"></script>
 
 </body>
 </html>
